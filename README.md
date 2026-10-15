@@ -20,7 +20,7 @@ Open `index.html` in a modern browser. Google Fonts are optional; system fallbac
 
 ## Host on Azure Static Web Apps
 
-This folder is a static website and can be hosted by Azure Static Web Apps without a custom backend. In the Azure portal, create a Static Web App, connect the GitHub repository containing this project, and set the app location to `/outputs/storyvar-demo`. Leave API location and output location empty. Authorize the GitHub Actions workflow Azure generates. This project has no build step; the app folder itself is the output.
+This repository is a static website and can be hosted by Azure Static Web Apps without a custom backend. In the Azure portal, create a Static Web App and connect this GitHub repository. Set the app location to `/`; leave API location and output location empty. Authorize the GitHub Actions workflow Azure generates. This project has no build step; the repository root is the app output.
 
 Check the portal's estimated cost before creating resources. Azure's free trial credit expires after 30 days; if you do not upgrade to pay-as-you-go, the subscription and resources can be disabled. Keep a local copy and public GitHub repository available. Do not upgrade billing unless you knowingly choose to.
 
@@ -28,6 +28,6 @@ Check the portal's estimated cost before creating resources. Azure's free trial 
 
 1. Test every interaction and fix any visual or accessibility issues.
 2. Connect Azure AI / Microsoft Foundry only if the account has access and the required model deployment is available; keep a deterministic demo fallback.
-3. Publish the repository publicly and deploy the app. Verify that the URL opens in a private/incognito window.
+3. Deploy the app and verify that the URL opens in a private/incognito window.
 4. Write the final pitch accurately describing technologies actually used.
 5. Record a demo video under two minutes and provide its public URL.
