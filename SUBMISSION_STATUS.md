@@ -16,17 +16,17 @@ Read the Game turns synthetic match events into an interactive explanation of a 
 | Narrative and recap | Produces a short recap from the synthetic sequence. |
 | Live ingestion / video auto-eventing | Not implemented; this is a local synthetic playback. |
 | Microsoft/Azure AI | Not connected yet. Do not claim Azure AI or agents until integrated and tested. |
-| Public URL / GitHub / demo video | Not yet published. |
+| Public URL / GitHub / demo video | Public GitHub repository exists; Azure deployment and demo video are still pending. |
 
 ## Deployment path
 
-The project is static HTML/CSS/JavaScript. It can be hosted on Azure Static Web Apps from a public GitHub repository with app location `/outputs/storyvar-demo` and no build or API output folder. The Azure portal generates a deployment workflow. The Azure free-trial credit is temporary; if it expires and the subscription is not upgraded, resources may be disabled. Keep the source and demo video accessible independently, and do not enable pay-as-you-go unless intentionally accepting its costs.
+The project is static HTML/CSS/JavaScript at the repository root. It can be hosted on Azure Static Web Apps by connecting this public GitHub repository; set app location to `/`, and leave API and output folders empty. Azure's free-trial credit is temporary; if it expires and the subscription is not upgraded, resources may be disabled. Keep the source and demo video accessible independently, and do not upgrade billing unless intentionally accepting its costs.
 
 ## Before submission
 
 1. Test the complete demo locally and in the deployed public URL.
 2. Add and demonstrate a real Microsoft/Azure AI component only if the account and service access are available. Keep a deterministic fallback.
-3. Publish the code repository publicly.
+3. Verify the public repository URL.
 4. Prepare the final project description with only technologies actually used.
 5. Record a public demo video under two minutes.
 6. Verify the Hackathon project form accepts the personal account and the deployed link.
