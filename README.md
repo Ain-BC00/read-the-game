@@ -22,7 +22,7 @@ Open `index.html` in a modern browser. Google Fonts are optional; system fallbac
 
 This repository is a static website and can be hosted by Azure Static Web Apps without a custom backend. In the Azure portal, create a Static Web App and connect this GitHub repository. Set the app location to `/`; leave API location and output location empty. Authorize the GitHub Actions workflow Azure generates. This project has no build step; the repository root is the app output.
 
-Check the portal's estimated cost before creating resources. Azure's free trial credit expires after 30 days; if you do not upgrade to pay-as-you-go, the subscription and resources can be disabled. Keep a local copy and public GitHub repository available. Do not upgrade billing unless you knowingly choose to.
+Check the portal's estimated cost before creating resources. Azure's free trial credit is temporary; if it expires and the subscription is not upgraded, resources may be disabled. Keep the source and demo video accessible independently, and do not upgrade billing unless intentionally accepting its costs.
 
 ## Remaining hackathon submission work
 
