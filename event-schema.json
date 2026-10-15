@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://readthegame.example/schemas/synthetic-match-v1.json",
+  "title": "Read the Game synthetic match event envelope",
+  "type": "object",
+  "required": ["schema_version", "match_id", "teams", "events"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "match_id": {"type": "string", "minLength": 1},
+    "teams": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"type": "string"}},
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "timestamp", "type", "team", "synthetic"],
+        "properties": {
+          "id": {"type": "string"},
+          "timestamp": {"type": "string", "pattern": "^[0-9]{2}:[0-9]{2}$"},
+          "type": {"enum": ["pressure", "pass", "box_entry", "shot", "tackle", "possession_change"]},
+          "team": {"type": "string"},
+          "player": {"type": "string"},
+          "zone": {"type": "string"},
+          "from_meters": {"$ref": "#/$defs/point"},
+          "to_meters": {"$ref": "#/$defs/point"},
+          "pass_distance_m": {"type": "number", "minimum": 0},
+          "synthetic": {"const": true}
+        },
+        "additionalProperties": false
+      }
+    },
+    "derived_metrics": {
+      "type": "object",
+      "properties": {
+        "pass_distance_m": {"type": "number", "minimum": 0},
+        "nearest_defender_gap_m": {"type": "number", "minimum": 0},
+        "alternative_interception_risk_pct": {"type": "integer", "minimum": 0, "maximum": 100}
+      },
+      "additionalProperties": false
+    }
+  },
+  "$defs": {
+    "point": {
+      "type": "object",
+      "required": ["x", "y"],
+      "properties": {
+        "x": {"type": "number", "minimum": 0, "maximum": 105},
+        "y": {"type": "number", "minimum": 0, "maximum": 68}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
