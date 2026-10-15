@@ -1,33 +1,45 @@
-# READ THE GAME — Azure-ready demo
+# Read the Game
 
-A browser-based demo for the Synthetic Match Insights Engine challenge. Its central interaction combines a short tactical “read the play” challenge with a what-if comparison: viewers see how Vale escaped pressure, then compare that synthetic sequence with an alternative central pass and its estimated interception risk. All match data is synthetic and fictional.
+**Read the Game** is an interactive, bilingual football-storytelling demo for the Synthetic Match Insights Engine challenge. It helps a viewer understand *why a play mattered*, not only what event occurred.
 
-## What the demo includes
+**Try it:** https://delightful-forest-0a04ede10.2.azurestaticapps.net  
+**Source code:** https://github.com/Ain-BC00/read-the-game
 
-- Repeatable synthetic match moments, with timeline, football pitch, player markers and animated ball path.
-- An interactive question, feedback and evidence explaining the selected answer.
-- Pass distance and nearest-defender gap calculated from the generated positions.
-- A “what if?” route with an explicitly illustrative risk estimate, not a prediction.
-- Fan and analyst views, Spanish and English text, recap, and downloadable structured event JSON.
+## The idea
 
-## Honest scope
+A viewer follows one fictional attacking sequence, answers a quick “read the play” question, and sees the evidence behind the explanation. Then they can compare the play with a clearly labeled “what if?” alternative pass and inspect its illustrative interception risk.
 
-The demo creates synthetic events in the browser. It does not ingest a real live feed, call an AI model, or persist match data. No real Premier League data or footage is used. Do not describe AI agents or Azure runtime services as implemented until they have actually been connected and demonstrated.
+The demo is designed for two audiences: a concise fan explanation and a more detailed analyst view. It also supports Spanish and English.
+
+## What works in this demo
+
+- Reproducible fictional match sequences with a timeline, pitch, player markers, and animated ball path.
+- Interactive question with feedback and a visual explanation of the play.
+- Pass distance and nearest-defender gap calculated from generated player positions.
+- A hypothetical alternative route with an explicitly illustrative risk estimate, not a match prediction.
+- Fan and analyst views, Spanish and English text, a short recap, and downloadable structured event JSON.
+
+## Data and implementation
+
+All teams, players, and match events in the demo are fictional and generated in the browser. No real Premier League match data or footage is used.
+
+The current implementation is a static HTML, CSS, and JavaScript application, hosted on Azure Static Web Apps Free and published from this public GitHub repository using GitHub Actions. It does **not** ingest a real live match feed, analyze video, call an AI model, or use AI agents. The explanations and estimates are deterministic. We will describe those capabilities as future work unless they are integrated and demonstrated.
+
+The event contract is documented in [event-schema.json](event-schema.json). The site itself has no custom backend or database.
 
 ## Run locally
 
-Open `index.html` in a modern browser. Google Fonts are optional; system fallbacks are included. Use “Otra jugada” to generate another sequence, “¿Y si…?” to inspect the alternate route, and Fan/Analista and ES/EN to change the explanation.
+Open `index.html` in a modern browser. Choose **Otra jugada** to generate another sequence, **¿Y si…?** to inspect the alternate route, and use the audience and language controls to change the explanation. Google Fonts are optional; system fonts are included as fallbacks.
 
-## Host on Azure Static Web Apps
+## Repository files
 
-This repository is a static website and can be hosted by Azure Static Web Apps without a custom backend. In the Azure portal, create a Static Web App and connect this GitHub repository. Set the app location to `/`; leave API location and output location empty. Authorize the GitHub Actions workflow Azure generates. This project has no build step; the repository root is the app output.
+- `index.html`, `styles.css`, `app.js`: the web experience.
+- `event-schema.json`: the documented structure for synthetic match events and JSON export.
+- `.github/workflows/`: the Azure Static Web Apps deployment workflow.
+- `SUBMISSION_STATUS.md`: current deployment and submission checklist.
 
-Check the portal's estimated cost before creating resources. Azure's free trial credit is temporary; if it expires and the subscription is not upgraded, resources may be disabled. Keep the source and demo video accessible independently, and do not upgrade billing unless intentionally accepting its costs.
+## For judges
 
-## Remaining hackathon submission work
+**Elevator pitch:** Read the Game turns fictional football events into an interactive, evidence-linked explanation of a tactical decision. Viewers can follow the play, compare a hypothetical alternative, and switch between fan and analyst explanations in Spanish or English.
 
-1. Test every interaction and fix any visual or accessibility issues.
-2. Connect Azure AI / Microsoft Foundry only if the account has access and the required model deployment is available; keep a deterministic demo fallback.
-3. Deploy the app and verify that the URL opens in a private/incognito window.
-4. Write the final pitch accurately describing technologies actually used.
-5. Record a demo video under two minutes and provide its public URL.
+This is a working static prototype of the audience experience. It demonstrates synthetic event generation, interpretation, explainability, on-screen rendering, personalization, and structured output; real-time feed ingestion and AI-generated narratives are not implemented in this version.
