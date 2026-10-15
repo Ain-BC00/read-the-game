@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#08111d">
+  <title>READ THE GAME — Descubre la jugada</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Read the Game inicio"><span class="brand-mark"><span></span><span></span><span></span></span><span>READ <span class="brand-accent">THE GAME</span></span></a>
+      <div class="topbar-center"><span class="live-dot"></span><span data-i18n="synthetic">PARTIDO SINTÉTICO EN VIVO</span><span class="topbar-divider"></span><span class="league-label">MATCH LAB / 01</span></div>
+      <div class="topbar-controls"><button class="language-button" id="languageButton" aria-label="Cambiar idioma">ES <span>⌄</span></button><button class="avatar" aria-label="Perfil de fan">A</button></div>
+    </header>
+    <main>
+      <section class="match-heading">
+        <div><p class="eyebrow" data-i18n="matchday">PARTIDO DE PRUEBA · JORNADA 28</p><h1 data-i18n="headline">No solo veas la jugada. Léela.</h1><p class="subhead" data-i18n="subhead">Descubre qué cambió el partido y por qué, con pruebas del juego.</p></div>
+        <button class="share-button" id="shareButton"><span>↗</span><span data-i18n="share">Compartir historia</span></button>
+      </section>
+      <section class="match-strip" aria-label="Marcador">
+        <div class="team team-home"><span class="team-crest crest-blue">N</span><span class="team-name" data-i18n="north">Northbridge</span></div>
+        <div class="score-block"><span class="score">1 <i>:</i> 1</span><span class="match-minute" id="matchMinute">63:42 <b>2.º T</b></span></div>
+        <div class="team team-away"><span class="team-name" data-i18n="vale">Vale United</span><span class="team-crest crest-coral">V</span></div>
+        <div class="strip-divider"></div><div class="mode-switch" role="group" aria-label="Modo de lectura"><button class="mode-option active" data-mode="fan" data-i18n="fan">Fan</button><button class="mode-option" data-mode="analyst" data-i18n="analyst">Analista</button></div>
+      </section>
+      <section class="dashboard">
+        <div class="pitch-panel panel">
+          <div class="panel-heading"><div><p class="eyebrow" data-i18n="liveMap">RECONSTRUCCIÓN DE LA JUGADA</p><h2 data-i18n="livePlay">Así salió Vale de la presión</h2></div><div class="panel-actions"><div class="pitch-legend"><span><i class="legend-blue"></i><span data-i18n="north">Northbridge</span></span><span><i class="legend-coral"></i><span data-i18n="vale">Vale United</span></span></div><button id="newMoment" class="new-moment" data-i18n="newMoment">Nueva jugada</button></div></div>
+          <div class="pitch-wrap"><div class="pitch" id="pitch">
+            <div class="pitch-line halfway"></div><div class="pitch-circle"></div><div class="penalty-box left-box"></div><div class="goal-box left-goal"></div><div class="penalty-box right-box"></div><div class="goal-box right-goal"></div><div class="goal left-net"></div><div class="goal right-net"></div>
+            <svg class="run-lines" viewBox="0 0 1000 560" preserveAspectRatio="none" aria-hidden="true"><path class="run-line press-path" d="M 665 220 C 610 245, 570 275, 520 310"/><path class="run-line pass-path" d="M 405 350 C 520 325, 650 260, 780 210"/><path class="run-line whatif-path" d="M 405 350 C 500 335, 590 320, 665 280"/><path class="run-line runner-path" d="M 650 410 C 690 350, 735 280, 790 225"/><circle class="pulse-ring" cx="780" cy="210" r="22"/><circle class="pulse-ring pulse-ring-2" cx="780" cy="210" r="22"/></svg>
+            <div class="pitch-label label-left">NORTHBRIDGE</div><div class="pitch-label label-right">VALE UNITED</div>
+            <div class="player blue-player keeper" style="--x:8%;--y:50%">1</div><div class="player blue-player" style="--x:25%;--y:28%">4</div><div class="player blue-player" style="--x:28%;--y:70%">5</div><div class="player blue-player" style="--x:45%;--y:38%">8</div><div class="player blue-player" style="--x:48%;--y:63%">10</div><div class="player blue-player pressing" style="--x:66%;--y:40%">9</div><div class="player blue-player" style="--x:72%;--y:60%">6</div>
+            <div class="player coral-player keeper" style="--x:92%;--y:50%">1</div><div class="player coral-player" style="--x:76%;--y:27%">3</div><div class="player coral-player" style="--x:76%;--y:70%">6</div><div class="player coral-player passer" style="--x:42%;--y:63%">8</div><div class="player coral-player runner" style="--x:78%;--y:39%">11</div><div class="player coral-player" style="--x:83%;--y:55%">9</div>
+            <div class="ball" id="ball" style="--x:42%;--y:63%"><span></span></div><div class="pitch-callout"><span class="callout-pulse"></span><span data-i18n="space">ESPACIO A LA ESPALDA</span><b>64′</b></div>
+          </div></div>
+          <div class="timeline-row"><span class="timeline-time">63′</span><input id="timeline" type="range" min="0" max="100" value="38" aria-label="Línea de tiempo de la jugada"><span class="timeline-time">64′</span><button class="play-button" id="playButton" aria-label="Reproducir jugada">▶</button></div>
+          <div class="event-strip" id="eventStrip"><span class="event-chip"><i class="event-dot blue-dot"></i><span data-i18n="event1">Northbridge activa la presión</span><small>63:18</small></span><span class="event-chip"><i class="event-dot coral-dot"></i><span data-i18n="event2">Vale encuentra un pase diagonal</span><small>63:31</small></span><span class="event-chip active-event"><i class="event-dot coral-dot"></i><span data-i18n="event3">Vale rompe la primera línea</span><small>63:42</small></span></div>
+          <div class="scenario-switch" role="group" aria-label="Comparar escenarios"><span data-i18n="scenarioLabel">COMPARA LA DECISIÓN</span><button class="scenario-option active" data-scenario="actual" data-i18n="actual">LO QUE PASÓ</button><button class="scenario-option" data-scenario="alternative" data-i18n="alternative">¿Y SI…?</button></div>
+          <div class="scenario-note" id="scenarioNote" aria-live="polite" data-i18n="actualNote">En esta secuencia sintética, Vale juega en diagonal al espacio y supera la primera presión.</div>
+          <details class="event-data"><summary data-i18n="eventDataTitle">Ver eventos sintéticos</summary><div class="event-data-toolbar"><span data-i18n="eventDataDescription">Esta jugada se construye con estos eventos estructurados.</span><button id="downloadEvents" class="new-moment" data-i18n="downloadEvents">Descargar JSON</button></div><pre id="eventPayload" aria-label="Eventos sintéticos en formato JSON"></pre></details>
+        </div>
+        <aside class="story-panel panel">
+          <div class="story-topline"><span class="story-label"><span class="sparkle">✳</span><span data-i18n="storyReview">RETO DE LECTURA</span></span><span class="confidence"><span></span><span data-i18n="syntheticBadge">EVENTOS SINTÉTICOS</span></span></div>
+          <p class="claim-label" data-i18n="questionLabel">¿QUÉ HIZO VALE PARA SALIR DE LA PRESIÓN?</p>
+          <h2 class="claim-text" data-i18n="question">El rival cerró los pases cortos. ¿Cómo logró avanzar Vale?</h2>
+          <div class="answer-list" role="group" aria-label="Respuestas">
+            <button class="answer-option" data-answer="wrong1"><span class="answer-letter">A</span><span data-i18n="answer1">Insistió con pases cortos por el centro</span></button>
+            <button class="answer-option" data-answer="correct"><span class="answer-letter">B</span><span data-i18n="answer2">Jugó en diagonal al espacio detrás de la presión</span></button>
+            <button class="answer-option" data-answer="wrong2"><span class="answer-letter">C</span><span data-i18n="answer3">El portero despejó el balón hacia delante</span></button>
+          </div>
+          <div class="verdict" id="verdict" aria-live="polite"><span class="verdict-icon">?</span><div><strong data-i18n="verdictTitle">Elige una respuesta</strong><p data-i18n="verdictText">Después te mostramos la jugada y las señales que lo prueban.</p></div></div>
+          <div class="whatif-panel" id="whatIfPanel" hidden><p class="eyebrow" data-i18n="whatIfLabel">SIMULACIÓN DE ALTERNATIVA</p><h3 data-i18n="whatIfTitle">¿Y si Vale hubiera intentado el pase central?</h3><p data-i18n="whatIfText">La línea central tenía dos rivales cerca. La simulación estima más riesgo de pérdida; no afirma qué habría ocurrido.</p><div class="risk-meter"><span data-i18n="riskLabel">RIESGO DE INTERCEPCIÓN</span><div><i></i></div><strong data-i18n="riskValue">ALTO</strong></div><div class="scenario-caveat" data-i18n="scenarioCaveat">Estimación ilustrativa basada en posiciones sintéticas, no una predicción cierta.</div></div>
+          <div class="evidence-title"><span data-i18n="evidence">LAS PRUEBAS DEL PARTIDO</span><span class="evidence-count">03</span></div>
+          <div class="evidence-list"><div class="evidence-row"><span class="evidence-number">01</span><span class="evidence-copy" data-i18n="evidence1">El pase superó la primera línea de presión</span><strong data-stat="distance">28 m</strong></div><div class="evidence-row"><span class="evidence-number">02</span><span class="evidence-copy" data-i18n="evidence2">La receptora encontró espacio por la banda</span><strong data-stat="space">libre</strong></div><div class="evidence-row"><span class="evidence-number">03</span><span class="evidence-copy" data-i18n="evidence3">La secuencia terminó en una llegada al área</span><strong data-stat="outcome">+1</strong></div></div>
+          <div class="story-footer"><span class="verified-mark">✓</span><span data-i18n="verified">La explicación se vincula con eventos del partido.</span><button class="info-button" aria-label="Más información">i</button></div>
+        </aside>
+      </section>
+      <section class="bottom-row"><div class="insight-banner"><div class="insight-icon">✳</div><div><p class="eyebrow" data-i18n="storySoFar">POR QUÉ IMPORTA</p><p class="insight-text" data-i18n="summary">Un pase diagonal convirtió la presión rival en espacio para atacar.</p></div><button class="arrow-button" id="nextInsight" aria-label="Ver resumen">→</button></div><div class="personalize-card"><div><p class="eyebrow" data-i18n="yourView">TU FORMA DE VER</p><p data-i18n="personalized">Fan · Vale United · Español</p></div><button class="customize-button" id="customizeButton" data-i18n="customize">Personalizar</button></div></section>
+      <section class="recap-panel panel" id="recapPanel" hidden><div><p class="eyebrow" data-i18n="recapLabel">RESUMEN AUTOMÁTICO · 63′–64′</p><h2 data-i18n="recapTitle">La jugada que cambió el ritmo</h2><p data-i18n="recapText">Northbridge adelantó la presión para recuperar el balón. Vale evitó el atasco central con un pase diagonal de 28 metros a un espacio libre; la receptora avanzó y la secuencia terminó en una llegada al área. La presión de Northbridge no desapareció, pero Vale encontró una salida y cambió el ritmo del ataque.</p></div><button id="closeRecap" class="customize-button" data-i18n="close">Cerrar</button></section>
+      <footer><span>READ THE GAME</span><span data-i18n="footer">Prototipo con datos sintéticos · La jugada se reconstruye desde eventos</span><span>v0.2</span></footer>
+    </main><div class="toast" id="toast" role="status"></div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
