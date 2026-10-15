@@ -1,32 +1,22 @@
-# READ THE GAME — submission readiness
+# Submission status
 
-## Elevator pitch draft
+## Completed
 
-Read the Game turns synthetic match events into an interactive explanation of a tactical decision. Fans compare what happened with a clearly labeled hypothetical alternative, follow the reconstructed play on a pitch, inspect the event evidence, and switch between a simple fan explanation and an analyst view. The same moment can be explored in Spanish or English and exported as timed, machine-readable event data.
+- Public source repository: https://github.com/Ain-BC00/read-the-game
+- Azure Static Web Apps Free resource created and linked to the `main` branch.
+- GitHub Actions deployment completed successfully.
+- Public app URL: https://delightful-forest-0a04ede10.2.azurestaticapps.net
+- Static demo supports fictional synthetic sequences, a pitch-and-timeline view, evidence-linked explanations, a hypothetical alternative route, fan/analyst views, Spanish/English, a recap, and JSON export.
 
-## Current implementation
+## Still to do before submission
 
-| Requirement | Current status |
-|---|---|
-| Synthetic football events | Generates fictional pressure, pass, and box-entry events in the browser; exports the sequence as JSON. |
-| Interpretation | Calculates pass distance, nearest-defender gap, and illustrative alternative passing-lane risk. |
-| Explainability | Shows the route, pressure and evidence behind the explanation. |
-| On-screen rendering | Reconstructs movement on a pitch with a timeline and overlay-like story cards. |
-| Personalization | Fan/analyst mode and Spanish/English. Favorite team/player focus is not implemented. |
-| Narrative and recap | Produces a short recap from the synthetic sequence. |
-| Live ingestion / video auto-eventing | Not implemented; this is a local synthetic playback. |
-| Microsoft/Azure AI | Not connected yet. Do not claim Azure AI or agents until integrated and tested. |
-| Public URL / GitHub / demo video | Public GitHub repository exists; Azure deployment and demo video are still pending. |
+1. Open the public app in a private/incognito window and test every interaction.
+2. Record a public demo video under two minutes and add its URL to the hackathon project page.
+3. Add the public repository and deployed app URLs to the project submission.
+4. Use the final pitch in `README.md`, adjusting it only to describe capabilities that have actually been tested.
 
-## Deployment path
+## Scope to describe accurately
 
-The project is static HTML/CSS/JavaScript at the repository root. It can be hosted on Azure Static Web Apps by connecting this public GitHub repository; set app location to `/`, and leave API and output folders empty. Azure's free-trial credit is temporary; if it expires and the subscription is not upgraded, resources may be disabled. Keep the source and demo video accessible independently, and do not upgrade billing unless intentionally accepting its costs.
+This submission currently demonstrates a static browser prototype. It generates fictional match events locally and uses deterministic calculations and explanations. It does not ingest a live match feed, analyze video, call an AI model, or run AI agents. No real Premier League data or footage is included. Do not claim Azure AI, Foundry, or agent orchestration as implemented unless those are connected and shown in the demo.
 
-## Before submission
-
-1. Test the complete demo locally and in the deployed public URL.
-2. Add and demonstrate a real Microsoft/Azure AI component only if the account and service access are available. Keep a deterministic fallback.
-3. Verify the public repository URL.
-4. Prepare the final project description with only technologies actually used.
-5. Record a public demo video under two minutes.
-6. Verify the Hackathon project form accepts the personal account and the deployed link.
+The website is hosted on Azure Static Web Apps Free. Avoid upgrading the plan or adding Azure services unless you intentionally accept any associated charges.
