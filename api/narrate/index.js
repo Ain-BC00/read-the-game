@@ -220,8 +220,10 @@ module.exports = async function (context, req) {
       signal: AbortSignal.timeout(35000)
     });
     if (!response.ok) {
-      context.log.warn(`${providerName} request failed with status ${response.status}`);
-      return json(502, { error: "model_request_failed", status: response.status });
+      const upstream = await response.json().catch(() => ({}));
+      const code = cleanText(upstream?.error?.code || upstream?.error?.type || "", 80);
+      context.log.warn(`${providerName} request failed with status ${response.status}${code ? ` (${code})` : ""}`);
+      return json(502, { error: "model_request_failed", status: response.status, stage: "upstream", code });
     }
     const result = await response.json();
     const content = isCloudflare
@@ -229,14 +231,14 @@ module.exports = async function (context, req) {
       : responseText(result);
     const narrative = typeof content === "string" ? readNarrative(content) : null;
     if (!narrative || !narrative.story || !narrative.why_it_matters || !narrative.recap) {
-      return json(502, { error: "invalid_model_response" });
+      return json(502, { error: "invalid_model_response", stage: "response_format" });
     }
     const allowedIds = new Set(body.events.map((event) => cleanText(event.id, 80)));
     narrative.evidence_event_ids = narrative.evidence_event_ids.filter((id) => allowedIds.has(id));
-    if (!narrative.evidence_event_ids.length) return json(502, { error: "missing_evidence_references" });
+    if (!narrative.evidence_event_ids.length) return json(502, { error: "missing_evidence_references", stage: "evidence" });
     return json(200, { ...narrative, tactical_signals: tacticalSignals, provider: providerName, generated_at: new Date().toISOString(), event_count: body.events.length });
   } catch (error) {
     context.log.error("Narration request failed", error);
-    return json(502, { error: "model_unavailable" });
+    return json(502, { error: "model_unavailable", stage: "connection" });
   }
 };
