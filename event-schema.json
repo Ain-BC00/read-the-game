@@ -1,50 +1,288 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://readthegame.example/schemas/synthetic-match-v1.json",
-  "title": "Read the Game synthetic match event envelope",
+  "$id": "https://readthegame.example/schemas/synthetic-match-v1.2.json",
+  "title": "Read the Game synthetic match and broadcast overlay envelope",
   "type": "object",
-  "required": ["schema_version", "match_id", "teams", "events"],
+  "required": [
+    "schema_version",
+    "match_id",
+    "match_metadata",
+    "teams",
+    "events",
+    "derived_metrics",
+    "overlay_cues"
+  ],
   "properties": {
-    "schema_version": {"const": "1.0"},
-    "match_id": {"type": "string", "minLength": 1},
-    "teams": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"type": "string"}},
+    "schema_version": {
+      "const": "1.2"
+    },
+    "match_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "match_metadata": {
+      "type": "object",
+      "required": [
+        "competition",
+        "matchweek",
+        "period",
+        "synthetic"
+      ],
+      "properties": {
+        "competition": {
+          "const": "Synthetic Match Lab"
+        },
+        "matchweek": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "period": {
+          "enum": [
+            1,
+            2,
+            "extra_time"
+          ]
+        },
+        "synthetic": {
+          "const": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "teams": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "type": "string"
+      }
+    },
     "events": {
       "type": "array",
+      "minItems": 1,
       "items": {
         "type": "object",
-        "required": ["id", "timestamp", "type", "team", "synthetic"],
+        "required": [
+          "id",
+          "timestamp",
+          "type",
+          "team",
+          "player",
+          "synthetic",
+          "detail"
+        ],
         "properties": {
-          "id": {"type": "string"},
-          "timestamp": {"type": "string", "pattern": "^[0-9]{2}:[0-9]{2}$"},
-          "type": {"enum": ["pressure", "pass", "box_entry", "shot", "tackle", "possession_change"]},
-          "team": {"type": "string"},
-          "player": {"type": "string"},
-          "zone": {"type": "string"},
-          "from_meters": {"$ref": "#/$defs/point"},
-          "to_meters": {"$ref": "#/$defs/point"},
-          "pass_distance_m": {"type": "number", "minimum": 0},
-          "synthetic": {"const": true}
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "timestamp": {
+            "type": "string",
+            "pattern": "^[0-9]{2}:[0-9]{2}$"
+          },
+          "type": {
+            "enum": [
+              "pressure",
+              "possession",
+              "pass",
+              "reception",
+              "sprint",
+              "tackle",
+              "shot",
+              "save"
+            ]
+          },
+          "team": {
+            "type": "string",
+            "minLength": 1
+          },
+          "player": {
+            "type": "string",
+            "minLength": 1
+          },
+          "receiver": {
+            "type": "string"
+          },
+          "from_meters": {
+            "$ref": "#/$defs/point"
+          },
+          "to_meters": {
+            "$ref": "#/$defs/point"
+          },
+          "position_m": {
+            "$ref": "#/$defs/point"
+          },
+          "distance_m": {
+            "type": "number",
+            "minimum": 0
+          },
+          "travel_seconds": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "pressure_pct": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "outcome": {
+            "type": "string"
+          },
+          "speed_kmh": {
+            "type": "number",
+            "minimum": 0
+          },
+          "on_target": {
+            "type": "boolean"
+          },
+          "synthetic": {
+            "const": true
+          },
+          "detail": {
+            "type": "string"
+          }
         },
         "additionalProperties": false
       }
     },
     "derived_metrics": {
       "type": "object",
+      "required": [
+        "pass_distance_m",
+        "nearest_defender_gap_m",
+        "pass_completion_pct",
+        "pass_difficulty_score",
+        "ball_speed_kmh",
+        "shot_speed_kmh",
+        "alternative_interception_risk_pct",
+        "player_max_speed_kmh"
+      ],
       "properties": {
-        "pass_distance_m": {"type": "number", "minimum": 0},
-        "nearest_defender_gap_m": {"type": "number", "minimum": 0},
-        "alternative_interception_risk_pct": {"type": "integer", "minimum": 0, "maximum": 100}
+        "pass_distance_m": {
+          "type": "number",
+          "minimum": 0
+        },
+        "nearest_defender_gap_m": {
+          "type": "number",
+          "minimum": 0
+        },
+        "pass_completion_pct": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "pass_difficulty_score": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "ball_speed_kmh": {
+          "type": "number",
+          "minimum": 0
+        },
+        "shot_speed_kmh": {
+          "type": "number",
+          "minimum": 0
+        },
+        "alternative_interception_risk_pct": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "player_max_speed_kmh": {
+          "type": "number",
+          "minimum": 0
+        }
       },
       "additionalProperties": false
+    },
+    "overlay_cues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "cue_id",
+          "start_time",
+          "duration_seconds",
+          "priority",
+          "kind",
+          "title",
+          "text",
+          "player",
+          "event_ids",
+          "synthetic"
+        ],
+        "properties": {
+          "cue_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "start_time": {
+            "type": "string",
+            "pattern": "^[0-9]{2}:[0-9]{2}$"
+          },
+          "duration_seconds": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "priority": {
+            "enum": [
+              "normal",
+              "medium",
+              "high"
+            ]
+          },
+          "kind": {
+            "enum": [
+              "pressure",
+              "pass",
+              "sprint",
+              "shot",
+              "save"
+            ]
+          },
+          "title": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "player": {
+            "type": "string"
+          },
+          "event_ids": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            }
+          },
+          "synthetic": {
+            "const": true
+          }
+        },
+        "additionalProperties": false
+      }
     }
   },
   "$defs": {
     "point": {
       "type": "object",
-      "required": ["x", "y"],
+      "required": [
+        "x",
+        "y"
+      ],
       "properties": {
-        "x": {"type": "number", "minimum": 0, "maximum": 105},
-        "y": {"type": "number", "minimum": 0, "maximum": 68}
+        "x": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 105
+        },
+        "y": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 68
+        }
       },
       "additionalProperties": false
     }

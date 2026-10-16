@@ -1,0 +1,14 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "",
+    "FUNCTIONS_WORKER_RUNTIME": "node",
+    "AI_PROVIDER": "foundry",
+    "FOUNDRY_ENDPOINT": "https://YOUR-FOUNDRY-RESOURCE.services.ai.azure.com/api/projects/YOUR-PROJECT",
+    "FOUNDRY_API_KEY": "ADD_LOCALLY_ONLY",
+    "FOUNDRY_DEPLOYMENT": "gpt-5-mini",
+    "CLOUDFLARE_ACCOUNT_ID": "OPTIONAL_CLOUDFLARE_ACCOUNT_ID",
+    "CLOUDFLARE_API_TOKEN": "OPTIONAL_CLOUDFLARE_TOKEN",
+    "CLOUDFLARE_MODEL": "@cf/meta/llama-3.1-8b-instruct-fp8-fast"
+  }
+}
