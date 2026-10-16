@@ -213,7 +213,8 @@ module.exports = async function (context, req) {
           : {
               instructions: system,
               input: JSON.stringify(contextData),
-              max_output_tokens: 500,
+              max_output_tokens: 900,
+              reasoning: { effort: "low" },
               text: { format: { type: "json_schema", name: "match_narrative", strict: true, schema: { type: "object", properties: { story: { type: "string" }, why_it_matters: { type: "string" }, recap: { type: "string" }, evidence_event_ids: { type: "array", items: { type: "string" } } }, required: ["story", "why_it_matters", "recap", "evidence_event_ids"], additionalProperties: false } } }
             })
       }),
@@ -231,7 +232,8 @@ module.exports = async function (context, req) {
       : responseText(result);
     const narrative = typeof content === "string" ? readNarrative(content) : null;
     if (!narrative || !narrative.story || !narrative.why_it_matters || !narrative.recap) {
-      return json(502, { error: "invalid_model_response", stage: "response_format" });
+      context.log.warn(providerName + " returned no usable narrative; response status " + cleanText(result?.status, 40));
+      return json(502, { error: "invalid_model_response", stage: "response_format", response_status: cleanText(result?.status, 40), incomplete_reason: cleanText(result?.incomplete_details?.reason, 80) });
     }
     const allowedIds = new Set(body.events.map((event) => cleanText(event.id, 80)));
     narrative.evidence_event_ids = narrative.evidence_event_ids.filter((id) => allowedIds.has(id));
