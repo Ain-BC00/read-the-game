@@ -214,7 +214,7 @@ module.exports = async function (context, req) {
               instructions: system,
               input: JSON.stringify(contextData),
               max_output_tokens: 500,
-              text: { format: { type: "json_object" } }
+              text: { format: { type: "json_schema", name: "match_narrative", strict: true, schema: { type: "object", properties: { story: { type: "string" }, why_it_matters: { type: "string" }, recap: { type: "string" }, evidence_event_ids: { type: "array", items: { type: "string" } } }, required: ["story", "why_it_matters", "recap", "evidence_event_ids"], additionalProperties: false } } }
             })
       }),
       signal: AbortSignal.timeout(35000)
