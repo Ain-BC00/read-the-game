@@ -13,11 +13,11 @@ Read the Game is a bilingual match intelligence workspace for fictional football
 - Fan and analyst modes, Spanish and English, and saved preferences for team, player, and metric.
 - Downloadable schema 1.2 JSON containing structured events, derived metrics, and timestamped overlay cues linked to event IDs.
 - A two-stage intelligence workflow: deterministic tactical signal detection (pressure escape, speed threshold, difficult pass, shot/save, pressure snapshot), followed by Microsoft Foundry narration grounded in those signals and event references.
-- Azure Static Web Apps hosting and an Azure Functions endpoint prepared for Microsoft Foundry. Cloud narration is only active after the updated code is deployed and the server-side Foundry settings are configured.
+- Azure Static Web Apps hosting and a deployed Azure Functions endpoint prepared for Microsoft Foundry. The endpoint is live; cloud narration becomes active after the server-side Foundry settings are configured.
 
 ## Honest scope
 
-The app uses only fictional, football-realistic events. It does not ingest an external match feed, analyze video, or identify real players from broadcast footage. Its “live” mode is a timed synthetic event stream and its recap covers the received sequence, not a full 90-minute match. Speed values and tactical difficulty are illustrative calculations from the supplied synthetic positions, not official tracking data. The Foundry endpoint has not yet been verified against the deployed site, so do not describe cloud AI as live until that test passes. No Premier League match data or imagery is included.
+The app uses only fictional, football-realistic events. It does not ingest an external match feed, analyze video, or identify real players from broadcast footage. Its “live” mode is a timed synthetic event stream and its recap covers the received sequence, not a full 90-minute match. Speed values and tactical difficulty are illustrative calculations from the supplied synthetic positions, not official tracking data. The deployed Foundry endpoint currently reports `configured: false`; no real model request has been made yet. Do not describe cloud AI as active until the server-side settings are added and a real response is verified. No Premier League match data or imagery is included.
 
 The hackathon description says video auto-eventing is a feature to consider; it is not stated as a must-have. The core submission still needs a real working AI connection, a public repository, a pitch that names technologies actually used, and a public demo video shorter than two minutes.
 
@@ -27,7 +27,7 @@ Open index.html in a modern browser. Press **Start synthetic feed** to watch eve
 
 ## Microsoft Foundry and Azure
 
-The current public Azure Static Web App still serves an older revision until the reviewed branch is deployed. This source includes api/narrate and the deployment workflow points to the api folder. Once the updated source is deployed, add these server-side environment variables in the Static Web App production environment:
+The public Azure Static Web App now serves this version, and `/api/narrate` is deployed. Its status endpoint currently reports that Foundry is not configured. In the Static Web App resource, open **Configuration / Environment variables** and add these production settings:
 
 - AI_PROVIDER = foundry
 - FOUNDRY_ENDPOINT = the Foundry project endpoint
@@ -38,8 +38,7 @@ Never put the key in browser code, GitHub files, screenshots, or chat. The GET e
 
 ## Still needed for the hackathon submission
 
-- Deploy this reviewed revision to Azure and verify the public site and API.
-- Test Foundry with the deployed server-side settings and confirm event citations.
+- Configure Foundry in Azure, make a real narration request, and verify that its evidence references are valid.
 - Test the website at desktop and mobile widths and test JSON import/export in a browser.
 - Prepare a concise pitch that accurately describes the implemented Microsoft/Azure services.
 - Record and publish a demonstration video under two minutes, without unlicensed music or third-party marks.

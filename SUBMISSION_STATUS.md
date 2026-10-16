@@ -16,7 +16,7 @@
 | Innovación de datos | Tres secuencias tácticas reproducibles y formato JSON documentado con esquema 1.2. |
 | Multiidioma | Interfaz y narración local en español e inglés; el idioma se envía al modelo para la respuesta. |
 | Auto-eventing desde video | No implementado. La convocatoria lo presenta como una función a considerar. |
-| Azure y tecnologías Microsoft | Azure Static Web Apps ya aloja la versión anterior. El código local incorpora Azure Functions para Microsoft Foundry y el workflow apunta al API; esta revisión aún no está desplegada. |
+| Azure y tecnologías Microsoft | Azure Static Web Apps Free aloja la versión actual y su ruta Azure Functions `/api/narrate`. Foundry está desplegado en el código, pero aún no configurado en variables de entorno. |
 | Verificación técnica | Sintaxis, JSON y diff limpios; cuatro pruebas de API pasan con Foundry simulado. No se ha hecho una llamada real al modelo ni una prueba visual automatizada del navegador. |
 | Presentación | Repositorio público ya creado. Video y página de entrega siguen pendientes. |
 
@@ -26,13 +26,13 @@ Read the Game convierte eventos sintéticos de fútbol en lecturas tácticas int
 
 ## Lo que falta para afirmar cumplimiento final
 
-La revisión local cubre la tubería funcional con eventos sintéticos, explicaciones, personalización, recap de secuencia y salidas legibles por máquina. No se debe afirmar todavía que todo está listo para entregar: Foundry no se ha probado desde la URL desplegada, Azure sigue sirviendo la versión anterior, la aplicación no recibe una transmisión externa ni analiza video, y faltan las pruebas visuales, el video público de menos de dos minutos y la página del hackathon.
+La versión actual está desplegada en Azure y `/api/narrate` ya responde. La ruta indica `configured: false` hasta añadir las variables de Foundry; todavía no se ha probado una llamada real al modelo. La aplicación no recibe una transmisión externa ni analiza video, y faltan pruebas visuales en móvil, el video público de menos de dos minutos y la página del hackathon.
 
 La petición de auto-eventing de video está formulada en la descripción como una función sugerida (“features you should consider incorporating”), no como uno de los cinco pasos centrales requeridos. Si se quisiera añadir, haría falta un video sintético autorizado y un modelo/pipeline de visión; no se debe simular que ya existe esa capacidad.
 
 ## Próximos pasos técnicos de la entrega
 
 1. Completar pruebas en navegador, incluida importación y exportación JSON en escritorio y móvil.
-2. Desplegar esta revisión aprobada y comprobar la URL pública y /api/narrate.
-3. Configurar los secretos de Foundry solo en Azure y confirmar una respuesta real con citas válidas.
+2. Configurar los secretos de Foundry solo en Azure y confirmar una respuesta real con citas válidas.
+3. Probar JSON y la interfaz en móvil y escritorio.
 4. Publicar el pitch con tecnologías comprobadas, grabar el video bajo dos minutos y completar la página de envío.
