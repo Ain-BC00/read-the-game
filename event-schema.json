@@ -45,6 +45,9 @@
         },
         "synthetic": {
           "const": true
+        },
+        "session": {
+          "type": "boolean"
         }
       },
       "additionalProperties": false
@@ -144,6 +147,23 @@
         },
         "additionalProperties": false
       }
+    },
+    "session_metrics": {
+      "type": "object",
+      "description": "Aggregate counts for the received synthetic session, which may contain several sequences.",
+      "properties": {
+        "event_count": { "type": "integer", "minimum": 0 },
+        "sequence_count": { "type": "integer", "minimum": 0 },
+        "pass_count": { "type": "integer", "minimum": 0 },
+        "completed_passes": { "type": "integer", "minimum": 0 },
+        "pass_distance_m": { "type": "number", "minimum": 0 },
+        "shots": { "type": "integer", "minimum": 0 },
+        "saves": { "type": "integer", "minimum": 0 },
+        "peak_pressure_pct": { "type": ["integer", "null"], "minimum": 0, "maximum": 100 },
+        "peak_player_speed_kmh": { "type": ["number", "null"], "minimum": 0 },
+        "players": { "type": "object" }
+      },
+      "additionalProperties": false
     },
     "derived_metrics": {
       "type": "object",

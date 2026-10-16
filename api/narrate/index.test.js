@@ -40,7 +40,7 @@ test('reports configured status without exposing credentials', async () => {
   assert.equal(JSON.stringify(response.body).includes('test-secret'), false);
 });
 
-test('grounds Foundry narration in tactical signals and filters unsupported evidence IDs', async () => {
+test('rejects Foundry narration that cites an event not received by the app', async () => {
   configureFoundry();
   let requestedUrl;
   let requestBody;
@@ -61,11 +61,37 @@ test('grounds Foundry narration in tactical signals and filters unsupported evid
     method: 'POST', headers: { 'x-forwarded-for': 'test-narration-client' },
     body: { events: sampleEvents(), metrics: { pass_difficulty_score: 74 }, language: 'en', mode: 'analyst' }
   });
-  assert.equal(response.status, 200);
+  assert.equal(response.status, 502);
   assert.equal(requestedUrl, 'https://foundry.example.test/openai/v1/responses');
   assert.match(requestBody.input, /pressure_escape/);
-  assert.deepEqual(response.body.evidence_event_ids, ['pass-1']);
-  assert.equal(response.body.tactical_signals[0].signal_id, 'pressure_escape');
+  assert.equal(response.body.error, 'invalid_evidence_references');
+});
+
+test('verifies every evidence reference against received synthetic events', async () => {
+  configureFoundry();
+  let requestBody;
+  global.fetch = async (url, options) => {
+    requestBody = JSON.parse(options.body);
+    return { ok: true, json: async () => ({ output_text: JSON.stringify({
+      story: 'Vale escaped the press.',
+      why_it_matters: 'The pass followed pressure.',
+      recap: 'Northbridge pressed before Vale completed a diagonal pass.',
+      evidence_event_ids: ['press-1', 'pass-1']
+    }) }) };
+  };
+  const response = await handler(context(), {
+    method: 'POST', headers: { 'x-forwarded-for': 'test-verified-client' },
+    body: { match_id: 'session-1', task: 'match_recap', events: sampleEvents(), metrics: { sequence_count: 1, pass_count: 1, pass_difficulty_score: 74 }, language: 'en', mode: 'analyst' }
+  });
+  assert.equal(response.status, 200);
+  assert.equal(JSON.parse(requestBody.input).task, 'complete_session_recap');
+  assert.equal(JSON.parse(requestBody.input).metrics.sequence_count, 1);
+  assert.deepEqual(response.body.verification, {
+    status: 'verified',
+    method: 'all cited IDs match received synthetic event IDs',
+    verified_event_ids: ['press-1', 'pass-1']
+  });
+  assert.deepEqual(response.body.evidence_event_ids, ['press-1', 'pass-1']);
 });
 
 test('rejects non-synthetic and out-of-order events before calling the model', async () => {

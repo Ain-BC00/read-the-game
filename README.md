@@ -9,15 +9,15 @@ Read the Game is a bilingual match intelligence workspace for fictional football
 - Import of structured synthetic event JSON, with validation that rejects real/non-synthetic labels, unknown event types, teams, or roster names; imported events replay through the same feed.
 - Fictional player identification by name, number, position, and team. Player top speed is surfaced above a 25 km/h threshold.
 - Pass distance and completion, illustrative pass difficulty, estimated ball and shot speed, and qualitative sequence control, pressure, and rhythm.
-- Evidence-linked explanations, a transparent “what if” route estimate, and a short recap of the events received so far.
+- Evidence-linked explanations, a transparent “what if” route estimate, and a full synthetic-session recap spanning every received sequence. The recap is generated locally by default and can be explicitly expanded with Foundry; referenced event IDs are validated against the received feed.
 - Fan and analyst modes, Spanish and English, and saved preferences for team, player, and metric.
-- Downloadable schema 1.2 JSON containing structured events, derived metrics, and timestamped overlay cues linked to event IDs.
+- Broadcast-mode preview of timestamped, prioritized overlay cues, plus a dedicated machine-readable JSON export linked to synthetic event IDs.
 - A two-stage intelligence workflow: deterministic tactical signal detection (pressure escape, speed threshold, difficult pass, shot/save, pressure snapshot), followed by Microsoft Foundry narration grounded in those signals and event references.
-- Azure Static Web Apps hosting and a deployed Azure Functions endpoint prepared for Microsoft Foundry. The endpoint is live; cloud narration becomes active after the server-side Foundry settings are configured.
+- Azure Static Web Apps hosting and an Azure Functions endpoint for Microsoft Foundry narration. The frontend never receives the Foundry key; check the deployed `/api/narrate` status and run a live request to verify the current Azure settings.
 
 ## Honest scope
 
-The app uses only fictional, football-realistic events. It does not ingest an external match feed, analyze video, or identify real players from broadcast footage. Its “live” mode is a timed synthetic event stream and its recap covers the received sequence, not a full 90-minute match. Speed values and tactical difficulty are illustrative calculations from the supplied synthetic positions, not official tracking data. The deployed Foundry endpoint currently reports `configured: false`; no real model request has been made yet. Do not describe cloud AI as active until the server-side settings are added and a real response is verified. No Premier League match data or imagery is included.
+The app uses only fictional, football-realistic events. It does not ingest an external match feed, analyze video, or identify real players from broadcast footage. Its “live” mode is a timed synthetic event stream and its recap covers the received session, not a real or full 90-minute match. Broadcast mode exports cue data; it is not connected to a live video or production renderer. Speed values and tactical difficulty are illustrative calculations from the supplied synthetic positions, not official tracking data. Confirm Foundry availability at `/api/narrate` and verify a real response in the deployed environment. No Premier League match data or imagery is included.
 
 The hackathon description says video auto-eventing is a feature to consider; it is not stated as a must-have. The core submission still needs a real working AI connection, a public repository, a pitch that names technologies actually used, and a public demo video shorter than two minutes.
 
@@ -27,18 +27,18 @@ Open index.html in a modern browser. Press **Start synthetic feed** to watch eve
 
 ## Microsoft Foundry and Azure
 
-The public Azure Static Web App now serves this version, and `/api/narrate` is deployed. Its status endpoint currently reports that Foundry is not configured. In the Static Web App resource, open **Configuration / Environment variables** and add these production settings:
+The Azure Static Web App serves the frontend and `/api/narrate` Azure Function. Foundry settings are server-side production environment variables:
 
 - AI_PROVIDER = foundry
 - FOUNDRY_ENDPOINT = the Foundry project endpoint
 - FOUNDRY_API_KEY = the secret key
 - FOUNDRY_DEPLOYMENT = gpt-5-mini
 
-Never put the key in browser code, GitHub files, screenshots, or chat. The GET endpoint at /api/narrate should report configured: true after configuration; then test an actual narration and check Azure usage before enabling repeated calls. See api/README.md for configuration and cost details.
+Never put the key in browser code, GitHub files, screenshots, or chat. The GET endpoint at `/api/narrate` reports whether settings are present; test an actual narration and verify its evidence references against received event IDs. Session recap requests support up to 40 events. See api/README.md for configuration and cost details.
 
 ## Still needed for the hackathon submission
 
-- Configure Foundry in Azure, make a real narration request, and verify that its evidence references are valid.
+- Verify a real Foundry narration and complete-session recap from the deployed site, including its evidence references.
 - Test the website at desktop and mobile widths and test JSON import/export in a browser.
 - Prepare a concise pitch that accurately describes the implemented Microsoft/Azure services.
 - Record and publish a demonstration video under two minutes, without unlicensed music or third-party marks.

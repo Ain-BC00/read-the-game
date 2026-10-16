@@ -16,7 +16,7 @@ For local testing, copy `local.settings.sample.json` to `local.settings.json` an
 
 ## Configure Azure Static Web Apps
 
-The latest Azure Static Web App deployment includes `api/` (`api_location: "api"`). The status endpoint at `https://<your-site>/api/narrate` currently returns `configured: false`. In the Static Web App resource's **Configuration / Environment variables**, add `AI_PROVIDER=foundry`, `FOUNDRY_ENDPOINT` (the Foundry project endpoint), `FOUNDRY_API_KEY` (secret), and `FOUNDRY_DEPLOYMENT=gpt-5-mini`. Azure stores these for the backend, not in the public page. Then confirm the endpoint returns `configured: true`, activate AI in the page, and verify a real narration. No secret needs to be shared with Codex.
+The Azure Static Web App deployment includes `api/` (`api_location: "api"`). Check `https://<your-site>/api/narrate` to see whether Foundry settings are available. In the Static Web App resource's **Configuration / Environment variables**, configure `AI_PROVIDER=foundry`, `FOUNDRY_ENDPOINT` (the Foundry project endpoint), `FOUNDRY_API_KEY` (secret), and `FOUNDRY_DEPLOYMENT=gpt-5-mini` if needed. Azure stores these for the backend, not in the public page. Then activate AI in the page and verify a real narration and its event references. No secret needs to be shared with Codex.
 
 The API includes a best-effort per-instance request throttle, not an identity system. The Cloudflare Free plan's daily allocation is the primary no-overage boundary: do not upgrade the account to a paid Workers plan if you want requests to stop at the free allowance. Check current account usage and terms before connecting. The app sends fictional synthetic match events only.
 
