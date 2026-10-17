@@ -17,9 +17,9 @@ Read the Game is a bilingual match intelligence workspace for fictional football
 
 ## Honest scope
 
-The app uses only fictional, football-realistic events. It does not ingest an external match feed, analyze video, or identify real players from broadcast footage. Its “live” mode is a timed synthetic event stream and its recap covers the received session, not a real or full 90-minute match. Broadcast mode exports cue data; it is not connected to a live video or production renderer. Speed values and tactical difficulty are illustrative calculations from the supplied synthetic positions, not official tracking data. The coordinated workflow makes two model calls to the same Foundry deployment per generated narration or recap; automatic narration is limited to one request per key moment in each sequence, with a separate request only when a user explicitly generates a session recap. Confirm Foundry availability at `/api/narrate` and verify a real response in the deployed environment. No Premier League match data or imagery is included.
+The app uses only fictional, football-realistic events. It does not ingest an external match feed, analyze video, or identify real players from broadcast footage. Its “live” mode is a timed synthetic event stream and its recap covers the received session, not a real or full 90-minute match. Broadcast mode exports cue data; it is not connected to a live video or production renderer. Speed values and tactical difficulty are illustrative calculations from the supplied synthetic positions, not official tracking data. The coordinated workflow makes two model calls to the same Foundry deployment per generated narration or recap; automatic narration is limited to one request per key moment in each sequence, with a separate request only when a user explicitly generates a session recap. The deployed Azure app has returned a real Foundry narration with evidence references verified against its synthetic events. No Premier League match data or imagery is included.
 
-The hackathon description says video auto-eventing is a feature to consider; it is not stated as a must-have. The core submission still needs a real working AI connection, a public repository, a pitch that names technologies actually used, and a public demo video shorter than two minutes.
+The hackathon description says video auto-eventing is a feature to consider; it is not stated as a must-have. The bilingual project pitch, including the Microsoft and Azure technologies actually used, is in [PROJECT_PITCH.md](PROJECT_PITCH.md). The remaining submission items are a public demo video shorter than two minutes and the final project-page entry.
 
 ## Run it locally
 
@@ -38,8 +38,8 @@ Never put the key in browser code, GitHub files, screenshots, or chat. The GET e
 
 ## Still needed for the hackathon submission
 
-- Verify a real Foundry narration and complete-session recap from the deployed site, including its evidence references.
+- Include the verified live Foundry narration in the demo; the session recap feature is available and should be shown with its evidence references.
 - Test the website at desktop and mobile widths and test JSON import/export in a browser.
-- Prepare a concise pitch that accurately describes the implemented Microsoft/Azure services.
+- Review the bilingual pitch in [PROJECT_PITCH.md](PROJECT_PITCH.md) and use the appropriate version on the hackathon project page.
 - Record and publish a demonstration video under two minutes, without unlicensed music or third-party marks.
 - Add the public GitHub repository and public video URL to the hackathon project page.
