@@ -1,38 +1,31 @@
-# READ THE GAME — verificación del proyecto
+# READ THE GAME — estado de la entrega
 
 ## Revisión frente a la convocatoria
 
-| Requisito | Estado de esta revisión local |
+| Requisito | Estado verificado |
 |---|---|
-| Proyecto nuevo y datos sintéticos | La aplicación produce tres patrones tácticos ficticios y acepta sobres de eventos marcados como sintéticos. No usa datos ni imágenes reales de la Premier League. |
-| Ingesta | Emite eventos sintéticos en pasos temporizados y puede importar JSON estructurado para reproducirlo como flujo. No hay conexión a un proveedor externo de datos en vivo. |
-| Interpretación | Calcula distancia y finalización de pases, dificultad ilustrativa, velocidad estimada de balón y tiro, velocidad máxima de jugador, y señales cualitativas de control, presión y ritmo. |
-| Identificación de jugadores | Usa roster sintético con nombre, dorsal y posición. Activa alerta al superar 25 km/h en eventos sintéticos de carrera. No identifica jugadores desde video. |
-| Explicación | El respaldo local vincula explicaciones a patrones y métricas observadas. La API agrega una etapa analítica determinista y pide al modelo explicar usando señales y referencias de eventos. |
-| Renderizado para pantalla | Reconstrucción visual animada y JSON 1.2 con overlays temporizados, prioridad, texto, jugador y referencias de evento. No está conectado a un mezclador de video o socio de render. |
-| Personalización | Fan/Analista, español/inglés, equipo favorito, jugador favorito y métrica seleccionada. |
-| Narrativas y resumen | Narrativa de la secuencia y recap de los eventos recibidos. No es un resumen completo de 90 minutos. Foundry requiere configuración y prueba real en Azure. |
-| Explicabilidad táctica | Señales sobre salida ante presión, pase difícil, umbral de velocidad, presión observada y remate/atajada. Las posiciones, umbrales y puntuaciones son ilustrativos. |
-| Innovación de datos | Tres secuencias tácticas reproducibles y formato JSON documentado con esquema 1.2. |
-| Multiidioma | Interfaz y narración local en español e inglés; el idioma se envía al modelo para la respuesta. |
-| Auto-eventing desde video | No implementado. La convocatoria lo presenta como una función a considerar. |
-| Azure y tecnologías Microsoft | Azure Static Web Apps Free aloja la versión actual y su ruta Azure Functions `/api/narrate`. Foundry está desplegado en el código, pero aún no configurado en variables de entorno. |
-| Verificación técnica | Sintaxis, JSON y diff limpios; cuatro pruebas de API pasan con Foundry simulado. No se ha hecho una llamada real al modelo ni una prueba visual automatizada del navegador. |
-| Presentación | Repositorio público ya creado. Video y página de entrega siguen pendientes. |
+| Proyecto y datos sintéticos | La aplicación produce tres secuencias tácticas ficticias e importa eventos JSON sintéticos. No usa partidos ni imágenes de la Premier League. |
+| Ingesta | Los eventos sintéticos llegan en pasos temporizados y se pueden importar desde JSON. No hay conexión a un proveedor externo de datos en vivo. |
+| Interpretación | Calcula distancia y finalización de pases, dificultad ilustrativa, velocidad estimada del balón y tiro, velocidad máxima de jugador y señales de control, presión y ritmo. |
+| Identificación | Etiqueta jugadores ficticios por nombre, dorsal, posición y equipo; activa alerta de velocidad con eventos sintéticos. No reconoce personas en video. |
+| Narrativa y explicación | La narración de Foundry se probó desde la web pública de Azure. Dos roles coordinados (Analista táctico y Narrador para audiencia) producen una historia adaptada; el servidor valida las referencias contra los eventos recibidos. Los dos roles usan el mismo despliegue `gpt-5-mini`. |
+| Recap | Hay recap de sesión para los eventos recibidos, con opción de generarlo con Foundry. No equivale al resumen de un partido completo de 90 minutos. Aún falta incluirlo en la demostración final. |
+| Renderizado | La web reconstruye las jugadas y exporta overlays JSON temporizados con referencias a eventos. No se conecta a un mezclador ni a un renderizador de transmisión. |
+| Personalización | Modos Fan/Analista, español/inglés, equipo, jugador y métrica favoritos. |
+| Multiidioma | Interfaz y narración en español e inglés. |
+| Auto-eventing desde video | No implementado; la convocatoria lo plantea como una función sugerida. |
+| Tecnologías | Azure Static Web Apps, Azure Functions, Microsoft Foundry (`gpt-5-mini`) y GitHub Actions para pruebas y despliegue. La clave de Foundry se mantiene en la configuración del servidor. |
+| Pruebas | Las pruebas automatizadas de la API pasaron en GitHub Actions antes del despliegue. En Azure se completó el flujo sintético y se verificó una respuesta real de Foundry con eventos citados comprobados. |
+| Presentación | El repositorio público y el pitch bilingüe están listos. El video público y la página final de envío siguen pendientes. |
 
-## Pitch provisional
+## Alcance honesto
 
-Read the Game convierte eventos sintéticos de fútbol en lecturas tácticas interactivas y bilingües. Una etapa analítica detecta salidas ante presión, pases exigentes, aceleraciones y remates; una etapa generativa prepara narrativas explicables y overlays sincronizados, personalizados para fans y analistas. Usa Azure Static Web Apps y Azure Functions con Microsoft Foundry cuando se configure y valide.
+“En vivo” se refiere a la llegada temporizada de eventos sintéticos, no a una transmisión de partido. Las velocidades, posiciones y puntuaciones son cálculos ilustrativos a partir de los datos sintéticos. La app no analiza video, no identifica jugadores reales y no distribuye datos de partidos de la Premier League. El auto-eventing de video aparece como una posibilidad a considerar, no como uno de los cinco pasos centrales de la canalización.
 
-## Lo que falta para afirmar cumplimiento final
+## Lo que falta para entregar
 
-La versión actual está desplegada en Azure y `/api/narrate` ya responde. La ruta indica `configured: false` hasta añadir las variables de Foundry; todavía no se ha probado una llamada real al modelo. La aplicación no recibe una transmisión externa ni analiza video, y faltan pruebas visuales en móvil, el video público de menos de dos minutos y la página del hackathon.
+1. Grabar y publicar un video de demostración de menos de dos minutos, sin música ni material protegido sin autorización.
+2. Pegar el enlace público del video y el enlace del repositorio en la página del hackathon.
+3. Mostrar en el video el flujo sintético, la narración de Foundry con evidencia, los modos Fan/Analista y el recap.
 
-La petición de auto-eventing de video está formulada en la descripción como una función sugerida (“features you should consider incorporating”), no como uno de los cinco pasos centrales requeridos. Si se quisiera añadir, haría falta un video sintético autorizado y un modelo/pipeline de visión; no se debe simular que ya existe esa capacidad.
-
-## Próximos pasos técnicos de la entrega
-
-1. Completar pruebas en navegador, incluida importación y exportación JSON en escritorio y móvil.
-2. Configurar los secretos de Foundry solo en Azure y confirmar una respuesta real con citas válidas.
-3. Probar JSON y la interfaz en móvil y escritorio.
-4. Publicar el pitch con tecnologías comprobadas, grabar el video bajo dos minutos y completar la página de envío.
+El pitch listo para copiar está en [PROJECT_PITCH.md](PROJECT_PITCH.md). El código fuente público está en https://github.com/Ain-BC00/read-the-game.
