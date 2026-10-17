@@ -32,66 +32,90 @@ function sampleEvents() {
   ];
 }
 
-test('reports configured status without exposing credentials', async () => {
+function analystOutput(ids = ['press-1', 'pass-1']) {
+  return { tactical_read: 'Vale played through the press with a completed forward pass.', why_it_matters: 'The pass followed opposing pressure in the received events.', evidence_event_ids: ids };
+}
+
+function narratorOutput(ids = ['press-1', 'pass-1']) {
+  return { story: 'Vale escaped the press with a forward pass.', recap: 'Northbridge pressed before Vale completed a diagonal pass.', evidence_event_ids: ids };
+}
+
+function queuedModelResponses(responses, requests = []) {
+  let index = 0;
+  global.fetch = async (url, options) => {
+    requests.push({ url, body: JSON.parse(options.body) });
+    const value = responses[index++];
+    if (value instanceof Error) throw value;
+    return { ok: true, json: async () => ({ output_text: JSON.stringify(value) }) };
+  };
+}
+
+test('reports the configured orchestrated workflow without exposing credentials', async () => {
   configureFoundry();
   const response = await handler(context(), { method: 'GET', headers: {} });
   assert.equal(response.status, 200);
   assert.equal(response.body.configured, true);
+  assert.equal(response.body.mode, 'orchestrated_narration');
+  assert.deepEqual(response.body.workflow, ['tactical_analysis', 'audience_narration', 'evidence_verification']);
   assert.equal(JSON.stringify(response.body).includes('test-secret'), false);
 });
 
-test('rejects Foundry narration that cites an event not received by the app', async () => {
+test('coordinates tactical and audience agents, then verifies the evidence chain', async () => {
   configureFoundry();
-  let requestedUrl;
-  let requestBody;
-  global.fetch = async (url, options) => {
-    requestedUrl = url;
-    requestBody = JSON.parse(options.body);
-    return {
-      ok: true,
-      json: async () => ({ output_text: JSON.stringify({
-        story: 'Vale escaped the press.',
-        why_it_matters: 'The completed pass followed pressure.',
-        recap: 'Northbridge pressed before Vale completed a diagonal pass.',
-        evidence_event_ids: ['pass-1', 'invented-event']
-      }) })
-    };
-  };
+  const requests = [];
+  queuedModelResponses([analystOutput(), narratorOutput()], requests);
   const response = await handler(context(), {
-    method: 'POST', headers: { 'x-forwarded-for': 'test-narration-client' },
-    body: { events: sampleEvents(), metrics: { pass_difficulty_score: 74 }, language: 'en', mode: 'analyst' }
-  });
-  assert.equal(response.status, 502);
-  assert.equal(requestedUrl, 'https://foundry.example.test/openai/v1/responses');
-  assert.match(requestBody.input, /pressure_escape/);
-  assert.equal(response.body.error, 'invalid_evidence_references');
-});
-
-test('verifies every evidence reference against received synthetic events', async () => {
-  configureFoundry();
-  let requestBody;
-  global.fetch = async (url, options) => {
-    requestBody = JSON.parse(options.body);
-    return { ok: true, json: async () => ({ output_text: JSON.stringify({
-      story: 'Vale escaped the press.',
-      why_it_matters: 'The pass followed pressure.',
-      recap: 'Northbridge pressed before Vale completed a diagonal pass.',
-      evidence_event_ids: ['press-1', 'pass-1']
-    }) }) };
-  };
-  const response = await handler(context(), {
-    method: 'POST', headers: { 'x-forwarded-for': 'test-verified-client' },
-    body: { match_id: 'session-1', task: 'match_recap', events: sampleEvents(), metrics: { sequence_count: 1, pass_count: 1, pass_difficulty_score: 74 }, language: 'en', mode: 'analyst' }
+    method: 'POST', headers: { 'x-forwarded-for': 'test-orchestrated-client' },
+    body: { match_id: 'session-1', task: 'match_recap', events: sampleEvents(), metrics: { sequence_count: 1, pass_count: 1, pass_difficulty_score: 74 }, language: 'en', mode: 'analyst', preference: { team: 'Vale United', player: 'Sara Costa', metric: 'distance' } }
   });
   assert.equal(response.status, 200);
-  assert.equal(JSON.parse(requestBody.input).task, 'complete_session_recap');
-  assert.equal(JSON.parse(requestBody.input).metrics.sequence_count, 1);
+  assert.equal(requests.length, 2);
+  assert.equal(requests[0].url, 'https://foundry.example.test/openai/v1/responses');
+  assert.match(requests[0].body.instructions, /Tactical Analyst agent/);
+  const narratorInput = JSON.parse(requests[1].body.input);
+  assert.match(requests[1].body.instructions, /Audience Narrator agent/);
+  assert.equal(narratorInput.task, 'complete_session_recap');
+  assert.equal(narratorInput.metrics.sequence_count, 1);
+  assert.deepEqual(narratorInput.tactical_analysis.allowed_evidence_event_ids, ['press-1', 'pass-1']);
+  assert.deepEqual(narratorInput.preference, { team: 'Vale United', player: 'Sara Costa', metric: 'distance' });
+  assert.deepEqual(response.body.orchestration, {
+    workflow: ['tactical_analysis', 'audience_narration', 'evidence_verification'], model_calls: 2, verified: true
+  });
   assert.deepEqual(response.body.verification, {
     status: 'verified',
-    method: 'all cited IDs match received synthetic event IDs',
+    method: 'narrator citations are a subset of tactical-agent citations and match received synthetic event IDs',
     verified_event_ids: ['press-1', 'pass-1']
   });
   assert.deepEqual(response.body.evidence_event_ids, ['press-1', 'pass-1']);
+  assert.equal(response.body.why_it_matters, analystOutput().why_it_matters);
+});
+
+test('stops orchestration before narration when the tactical agent cites unknown evidence', async () => {
+  configureFoundry();
+  const requests = [];
+  queuedModelResponses([analystOutput(['not-received'])], requests);
+  const response = await handler(context(), {
+    method: 'POST', headers: { 'x-forwarded-for': 'test-invalid-tactical-evidence' },
+    body: { events: sampleEvents(), language: 'en', mode: 'fan' }
+  });
+  assert.equal(response.status, 502);
+  assert.equal(response.body.stage, 'tactical_analysis_evidence');
+  assert.equal(response.body.error, 'invalid_evidence_references');
+  assert.equal(requests.length, 1);
+});
+
+test('rejects narrator evidence outside the tactical agent evidence boundary', async () => {
+  configureFoundry();
+  const requests = [];
+  queuedModelResponses([analystOutput(['pass-1']), narratorOutput(['press-1'])], requests);
+  const response = await handler(context(), {
+    method: 'POST', headers: { 'x-forwarded-for': 'test-narrator-evidence-boundary' },
+    body: { events: sampleEvents(), language: 'en', mode: 'fan' }
+  });
+  assert.equal(response.status, 502);
+  assert.equal(response.body.error, 'invalid_evidence_references');
+  assert.equal(response.body.stage, 'evidence_verification');
+  assert.equal(requests.length, 2);
 });
 
 test('rejects non-synthetic and out-of-order events before calling the model', async () => {
@@ -109,7 +133,7 @@ test('rejects non-synthetic and out-of-order events before calling the model', a
   assert.equal(outOfOrder.status, 400);
 });
 
-test('uses a clear unavailable response when no Foundry settings exist', async () => {
+test('uses an unavailable response when Foundry settings are missing', async () => {
   for (const name of settingNames) delete process.env[name];
   const response = await handler(context(), {
     method: 'POST', headers: { 'x-forwarded-for': 'test-unconfigured-client' }, body: { events: sampleEvents() }
