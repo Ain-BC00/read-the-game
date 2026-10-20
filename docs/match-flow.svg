@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1040" viewBox="0 0 1600 1040" role="img" aria-labelledby="title desc">
+<title id="title">READ THE GAME — verified narration workflow</title>
+<desc id="desc">The browser sends synthetic match events and calculated metrics to an Azure Function. The function validates inputs, calls the Tactical Analyst and Audience Narrator roles sequentially on the same Microsoft Foundry deployment, checks evidence references in code, and returns a verified story to the browser.</desc>
+<defs>
+ <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#07111d"/><stop offset="1" stop-color="#0b1d22"/></linearGradient>
+ <marker id="limeArrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#b9ef3d"/></marker>
+ <marker id="blueArrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#56c9ef"/></marker>
+ <style>text{font-family:Inter,Arial,sans-serif;fill:#eef5f7}.eyebrow{font-size:15px;font-weight:700;letter-spacing:3px;fill:#64d6a4}.title{font-size:38px;font-weight:800}.subtitle{font-size:17px;fill:#a6bac5}.lane{font-size:14px;font-weight:800;letter-spacing:2px;fill:#a7bac5}.label{font-size:15px;font-weight:700;fill:#e9f4f4}.small{font-size:13px;fill:#a9bec8}.step{font-size:13px;font-weight:800;fill:#07111d}.cap{font-size:12px;font-weight:800;letter-spacing:1px;fill:#c6f346}.foot{font-size:13px;fill:#a9bec8}</style>
+</defs>
+<rect width="1600" height="1040" rx="28" fill="url(#bg)"/>
+<path d="M0 160H1600" stroke="#203442"/>
+<text x="72" y="66" class="eyebrow">READ THE GAME · NARRATION LIFECYCLE</text>
+<text x="72" y="116" class="title">How an insight becomes a checked story</text>
+<text x="72" y="145" class="subtitle">Three clear stages: analyze the play, tailor the story, verify every cited event.</text>
+
+<rect x="72" y="194" width="1456" height="738" rx="22" fill="#0a1722" stroke="#213646"/>
+<rect x="72" y="194" width="320" height="68" rx="22" fill="#122535"/>
+<rect x="392" y="194" width="650" height="68" fill="#112a2b"/>
+<rect x="1042" y="194" width="486" height="68" rx="22" fill="#122535"/>
+<text x="112" y="236" class="lane">BROWSER · SYNTHETIC MATCH LAB</text>
+<text x="432" y="236" class="lane">AZURE FUNCTION · /API/NARRATE</text>
+<text x="1082" y="236" class="lane">MICROSOFT FOUNDRY · ONE DEPLOYMENT</text>
+<path d="M392 262V932M1042 262V932" stroke="#203441" stroke-dasharray="5 8"/>
+
+<!-- Lifelines -->
+<path d="M230 278V900M710 278V900M1260 278V900" stroke="#365061" stroke-width="2" stroke-dasharray="4 8"/>
+<rect x="129" y="275" width="202" height="38" rx="12" fill="#142839" stroke="#56c9ef"/>
+<text x="151" y="300" class="cap">WEB APP</text>
+<rect x="600" y="275" width="220" height="38" rx="12" fill="#142d2b" stroke="#58bb8b"/>
+<text x="622" y="300" class="cap">SERVER-SIDE API</text>
+<rect x="1150" y="275" width="220" height="38" rx="12" fill="#142d2b" stroke="#58bb8b"/>
+<text x="1172" y="300" class="cap">gpt-5-mini</text>
+
+<!-- 1 browser to API -->
+<circle cx="105" cy="355" r="17" fill="#b9ef3d"/><text x="101" y="360" class="step">1</text>
+<path d="M230 355H710" stroke="#56c9ef" stroke-width="3" marker-end="url(#blueArrow)"/>
+<rect x="343" y="328" width="255" height="48" rx="12" fill="#10212b" stroke="#284454"/>
+<text x="364" y="349" class="label">POST synthetic events</text><text x="364" y="368" class="small">metrics · language · fan/analyst preferences</text>
+
+<!-- 2 API validation -->
+<circle cx="485" cy="415" r="17" fill="#b9ef3d"/><text x="481" y="420" class="step">2</text>
+<rect x="520" y="392" width="380" height="76" rx="15" fill="#142d2b" stroke="#58bb8b"/>
+<text x="544" y="423" class="label">Validate synthetic payload</text>
+<text x="544" y="448" class="small">Event IDs · types · timestamps · numeric bounds</text>
+
+<!-- 3 API to analyst -->
+<circle cx="105" cy="530" r="17" fill="#b9ef3d"/><text x="101" y="535" class="step">3</text>
+<path d="M710 530H1260" stroke="#b9ef3d" stroke-width="3" marker-end="url(#limeArrow)"/>
+<rect x="825" y="503" width="330" height="50" rx="12" fill="#10212b" stroke="#345245"/>
+<text x="849" y="525" class="label">Tactical Analyst request</text><text x="849" y="545" class="small">deterministic signals + received events</text>
+
+<!-- 4 analyst to API -->
+<circle cx="105" cy="600" r="17" fill="#b9ef3d"/><text x="101" y="605" class="step">4</text>
+<path d="M1260 600H710" stroke="#56c9ef" stroke-width="3" marker-end="url(#blueArrow)"/>
+<rect x="842" y="573" width="308" height="50" rx="12" fill="#10212b" stroke="#284454"/>
+<text x="866" y="595" class="label">Tactical read + evidence IDs</text><text x="866" y="615" class="small">structured response from the model</text>
+
+<!-- 5 API to narrator -->
+<circle cx="105" cy="690" r="17" fill="#b9ef3d"/><text x="101" y="695" class="step">5</text>
+<path d="M710 690H1260" stroke="#b9ef3d" stroke-width="3" marker-end="url(#limeArrow)"/>
+<rect x="825" y="663" width="330" height="50" rx="12" fill="#10212b" stroke="#345245"/>
+<text x="849" y="685" class="label">Audience Narrator request</text><text x="849" y="705" class="small">mode · language · club · player · metric</text>
+
+<!-- 6 narrator returns -->
+<circle cx="105" cy="760" r="17" fill="#b9ef3d"/><text x="101" y="765" class="step">6</text>
+<path d="M1260 760H710" stroke="#56c9ef" stroke-width="3" marker-end="url(#blueArrow)"/>
+<rect x="842" y="733" width="308" height="50" rx="12" fill="#10212b" stroke="#284454"/>
+<text x="866" y="755" class="label">Personalized story + recap</text><text x="866" y="775" class="small">with citations from the selected evidence set</text>
+
+<!-- 7 evidence gate -->
+<circle cx="485" cy="830" r="17" fill="#b9ef3d"/><text x="481" y="835" class="step">7</text>
+<rect x="520" y="808" width="380" height="70" rx="15" fill="#182e29" stroke="#b9ef3d" stroke-width="2"/>
+<text x="544" y="838" class="label">Code-based evidence gate</text>
+<text x="544" y="862" class="small">Rejects any citation absent from received events</text>
+
+<!-- 8 return to browser -->
+<circle cx="105" cy="905" r="17" fill="#b9ef3d"/><text x="101" y="910" class="step">8</text>
+<path d="M710 905H230" stroke="#b9ef3d" stroke-width="3" marker-end="url(#limeArrow)"/>
+<rect x="315" y="882" width="300" height="44" rx="12" fill="#10212b" stroke="#345245"/>
+<text x="337" y="910" class="label">Show verified insight in the app</text>
+
+<rect x="72" y="954" width="1456" height="58" rx="16" fill="#12242a" stroke="#2c4a48"/>
+<text x="98" y="979" class="foot">Both AI roles call the same Foundry deployment sequentially; the evidence gate is deterministic code.</text>
+<text x="98" y="999" class="foot">A full-session recap is a separate user-requested call. Broadcast cues are exported as JSON, not sent to a live renderer.</text>
+</svg>

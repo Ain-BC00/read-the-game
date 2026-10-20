@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="940" viewBox="0 0 1600 940" role="img" aria-labelledby="title desc">
+<title id="title">READ THE GAME — implementation architecture</title>
+<desc id="desc">Browser-generated synthetic football events flow through Azure Static Web Apps and an Azure Function to Microsoft Foundry. Results return to the browser for display and overlay export. GitHub Actions deploys the application.</desc>
+<defs>
+ <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#07111d"/><stop offset="1" stop-color="#0b1d22"/></linearGradient>
+ <linearGradient id="glow" x2="1"><stop stop-color="#183a39"/><stop offset="1" stop-color="#102333"/></linearGradient>
+ <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#b9ef3d"/></marker>
+ <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#56c9ef"/></marker>
+ <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#000" flood-opacity=".32"/></filter>
+ <style>
+  text{font-family:Inter,Arial,sans-serif;fill:#eef5f7}.eyebrow{font-size:15px;font-weight:700;letter-spacing:3px;fill:#64d6a4}.title{font-size:38px;font-weight:800;letter-spacing:.2px}.subtitle{font-size:17px;fill:#a6bac5}.section{font-size:14px;font-weight:800;letter-spacing:2px;fill:#a7bac5}.nodeTitle{font-size:19px;font-weight:800}.nodeText{font-size:14px;fill:#a9bec8}.tag{font-size:12px;font-weight:700;letter-spacing:1px;fill:#c6f346}.edgeLabel{font-size:13px;font-weight:700;fill:#c7d6dc}.foot{font-size:13px;fill:#91a7b3}
+ </style>
+</defs>
+<rect width="1600" height="940" rx="28" fill="url(#bg)"/>
+<path d="M0 160H1600" stroke="#203442"/>
+<text x="72" y="66" class="eyebrow">READ THE GAME · SYSTEM OVERVIEW</text>
+<text x="72" y="116" class="title">From synthetic events to verified match stories</text>
+<text x="72" y="145" class="subtitle">A lightweight Azure-hosted web app with a coordinated, evidence-checked narration workflow.</text>
+
+<text x="78" y="212" class="section">USER EXPERIENCE · BROWSER</text>
+<g filter="url(#shadow)">
+ <rect x="72" y="238" width="390" height="400" rx="22" fill="#101e2c" stroke="#56c9ef" stroke-width="2"/>
+ <rect x="94" y="260" width="346" height="60" rx="14" fill="#14283a"/>
+ <text x="118" y="286" class="tag">FRONTEND</text><text x="118" y="308" class="nodeTitle">READ THE GAME web app</text>
+ <text x="104" y="358" class="nodeText">HTML · CSS · browser JavaScript</text>
+ <rect x="104" y="382" width="326" height="66" rx="12" fill="#122637" stroke="#2a4859"/>
+ <text x="124" y="409" class="nodeTitle" font-size="16">Timed synthetic event feed</text><text x="124" y="432" class="nodeText">Three fictional sequences · JSON replay</text>
+ <rect x="104" y="462" width="326" height="66" rx="12" fill="#122637" stroke="#2a4859"/>
+ <text x="124" y="489" class="nodeTitle" font-size="16">Local match intelligence</text><text x="124" y="512" class="nodeText">Passes · pressure · speed · player signals</text>
+ <rect x="104" y="542" width="326" height="66" rx="12" fill="#122637" stroke="#2a4859"/>
+ <text x="124" y="569" class="nodeTitle" font-size="16">Fan / Analyst · EN / ES</text><text x="124" y="592" class="nodeText">Personalized stories · recap · overlay JSON</text>
+</g>
+
+<text x="558" y="212" class="section">AZURE HOSTING · API BOUNDARY</text>
+<g filter="url(#shadow)">
+ <rect x="530" y="238" width="490" height="400" rx="22" fill="#0e2026" stroke="#b9ef3d" stroke-width="2"/>
+ <rect x="554" y="260" width="442" height="60" rx="14" fill="#19332e"/>
+ <text x="578" y="286" class="tag">AZURE STATIC WEB APPS</text><text x="578" y="308" class="nodeTitle">Frontend hosting + /api route</text>
+ <rect x="570" y="350" width="410" height="116" rx="16" fill="#132a30" stroke="#438c70"/>
+ <text x="594" y="381" class="tag">AZURE FUNCTIONS · JAVASCRIPT</text>
+ <text x="594" y="412" class="nodeTitle">/api/narrate</text>
+ <text x="594" y="439" class="nodeText">JavaScript · Node.js 20+</text>
+ <text x="594" y="458" class="nodeText">Validates input · calls Foundry</text>
+ <rect x="570" y="488" width="410" height="112" rx="16" fill="#132a30" stroke="#438c70"/>
+ <text x="594" y="520" class="tag">SERVER-SIDE SAFEGUARDS</text>
+ <text x="594" y="550" class="nodeTitle" font-size="17">Secrets stay in Azure settings</text>
+ <text x="594" y="576" class="nodeText">Structured output · evidence ID checks · rate limit</text>
+</g>
+
+<text x="1110" y="212" class="section">GENERATIVE AI</text>
+<g filter="url(#shadow)">
+ <rect x="1080" y="238" width="450" height="260" rx="22" fill="#101e2c" stroke="#64d6a4" stroke-width="2"/>
+ <rect x="1104" y="260" width="402" height="60" rx="14" fill="#18332f"/>
+ <text x="1128" y="286" class="tag">MICROSOFT FOUNDRY</text><text x="1128" y="308" class="nodeTitle">Configured gpt-5-mini deployment</text>
+ <rect x="1110" y="350" width="178" height="112" rx="14" fill="#142a35" stroke="#2a5261"/>
+ <text x="1128" y="382" class="nodeTitle" font-size="16">Tactical Analyst</text><text x="1128" y="408" class="nodeText">Find grounded signals</text><text x="1128" y="432" class="nodeText">Return event IDs</text>
+ <rect x="1300" y="350" width="206" height="112" rx="14" fill="#142a35" stroke="#2a5261"/>
+ <text x="1318" y="382" class="nodeTitle" font-size="16">Audience Narrator</text><text x="1318" y="408" class="nodeText">Adapt to mode, language,</text><text x="1318" y="432" class="nodeText">club, player and metric</text>
+</g>
+<path d="M1288 405H1300" stroke="#b9ef3d" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="1237" y="484" class="foot">Sequential roles · same model deployment</text>
+
+<path d="M462 350C492 350 500 382 530 382" fill="none" stroke="#56c9ef" stroke-width="3" marker-end="url(#arrowBlue)"/>
+<text x="472" y="336" class="edgeLabel" font-size="11">POST</text>
+<path d="M530 445C500 445 492 478 462 478" fill="none" stroke="#b9ef3d" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="468" y="502" class="edgeLabel" font-size="11">RESULT</text>
+<path d="M1020 404H1080" fill="none" stroke="#b9ef3d" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="1022" y="385" class="edgeLabel" font-size="11">CALL</text>
+<path d="M1080 454H1020" fill="none" stroke="#56c9ef" stroke-width="3" marker-end="url(#arrowBlue)"/>
+<text x="1017" y="479" class="edgeLabel" font-size="11">JSON</text>
+
+<rect x="72" y="694" width="1458" height="156" rx="22" fill="url(#glow)" stroke="#284b4c"/>
+<text x="104" y="734" class="section">DELIVERY &amp; OPERATIONS</text>
+<rect x="104" y="758" width="390" height="64" rx="14" fill="#10212b" stroke="#345565"/>
+<text x="128" y="785" class="nodeTitle" font-size="17">GitHub Actions</text><text x="128" y="808" class="nodeText">Build and deploy workflow for Azure Static Web Apps</text>
+<path d="M494 790H594" stroke="#b9ef3d" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="594" y="758" width="390" height="64" rx="14" fill="#10212b" stroke="#345565"/>
+<text x="618" y="785" class="nodeTitle" font-size="17">Azure Static Web Apps</text><text x="618" y="808" class="nodeText">Serves the web app and serverless API route</text>
+<rect x="1022" y="758" width="468" height="64" rx="14" fill="#10212b" stroke="#345565"/>
+<text x="1046" y="785" class="nodeTitle" font-size="17">Explicit scope</text><text x="1046" y="808" class="nodeText">Synthetic timed events only · no external match/video feed</text>
+<text x="72" y="900" class="foot">Architecture reflects the code and deployment configuration in this repository. Azure resources and model availability depend on deployment settings.</text>
+</svg>
