@@ -25,11 +25,11 @@ The diagrams below document the implementation in this repository. The browser c
 
 ### Architecture
 
-![READ THE GAME architecture: browser, Azure Static Web Apps, Azure Functions, Microsoft Foundry, and GitHub Actions](docs/architecture.png)
+![READ THE GAME architecture: browser, Azure Static Web Apps, Azure Functions, Microsoft Foundry, and GitHub Actions](docs/architecture.jpg)
 
 ### Narrative and evidence workflow
 
-![READ THE GAME workflow: synthetic events are analyzed, narrated for the selected audience, and checked against received evidence](docs/match-flow.png)
+![READ THE GAME workflow: synthetic events are analyzed, narrated for the selected audience, and checked against received evidence](docs/match-flow.jpg)
 
 The editable vector sources are also available as [architecture](docs/architecture.svg) and [narrative workflow](docs/match-flow.svg).
 
