@@ -12,11 +12,11 @@
 
 - Live Azure web app: https://delightful-forest-0a04ede10.2.azurestaticapps.net/
 - Public source repository: https://github.com/Ain-BC00/read-the-game
-- Public demo video: pending publication (add the YouTube, Vimeo, Facebook Video, or Youku URL here and on the hackathon project page).
+- Public demo video: https://youtu.be/bTZP2mEAM3E
 
 ## Accuracy notes
 
 - The two agent roles make sequential calls to the same `gpt-5-mini` Foundry deployment; this project does not use two separate models.
 - Events are synthetic and arrive on a timer. The app does not ingest a real-time external match feed, analyze video, or identify real players.
 - Overlay cues can be exported as JSON; they are not connected to a broadcast renderer.
-- Add the public video URL after publishing the completed video under two minutes. Do not claim a public video URL or live broadcast-renderer integration before then.
+- The demo video is published on YouTube. Add its URL to the hackathon project page along with the public source repository.
