@@ -19,15 +19,15 @@
 - **Public source repository:** https://github.com/Ain-BC00/read-the-game
 - **Project pitch:** [PROJECT_PITCH.md](PROJECT_PITCH.md)
 - **Architecture and workflow diagrams:** [Architecture](docs/architecture.svg) · [Narrative workflow](docs/match-flow.svg)
-- **Demonstration video:** Edited to 1:59; add the public YouTube, Vimeo, Facebook Video, or Youku link after publishing.
+- **Demonstration video:** Published on YouTube: https://youtu.be/bTZP2mEAM3E
 
 ## Presentation notes
 
 The demo uses fictional teams, players, and football events. Its live-style experience is a timed synthetic feed. Match stories, recaps, and broadcast cues are based on the events received by the application. Overlay cues are exportable as JSON for integration with a renderer.
 
+The published demo presents the synthetic event flow, Fan and Analyst views, evidence-linked narration, session recap, and overlay export.
+
 ## Final submission checklist
 
-1. Publish the edited demo video and copy its public URL.
-2. Add the public video URL to the hackathon project page.
-3. Add the public repository and project pitch to the same page.
-4. Show the synthetic event flow, Fan and Analyst views, evidence-linked narration, session recap, and overlay export in the demo.
+1. Add the public YouTube video URL to the hackathon project page.
+2. Add the public repository and project pitch to the same page.
