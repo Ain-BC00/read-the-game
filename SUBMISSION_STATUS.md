@@ -1,33 +1,33 @@
-# READ THE GAME — verificación del proyecto
+# READ THE GAME — Submission Overview
 
-## Revisión frente a la convocatoria
+## Project capabilities
 
-| Requisito | Estado de esta revisión local |
+| Hackathon area | What the project demonstrates |
 |---|---|
-| Proyecto nuevo y datos sintéticos | La aplicación produce tres patrones tácticos ficticios y acepta sobres de eventos marcados como sintéticos. No usa datos ni imágenes reales de la Premier League. |
-| Ingesta | Emite eventos sintéticos en pasos temporizados y puede importar JSON estructurado para reproducirlo como flujo. No hay conexión a un proveedor externo de datos en vivo. |
-| Interpretación | Calcula distancia y finalización de pases, dificultad ilustrativa, velocidad estimada de balón y tiro, velocidad máxima de jugador, y señales cualitativas de control, presión y ritmo. |
-| Identificación de jugadores | Usa roster sintético con nombre, dorsal y posición. Activa alerta al superar 25 km/h en eventos sintéticos de carrera. No identifica jugadores desde video. |
-| Explicación | El respaldo local vincula explicaciones a patrones y métricas observadas. La API agrega una etapa analítica determinista y pide al modelo explicar usando señales y referencias de eventos. |
-| Renderizado para pantalla | Reconstrucción visual animada y JSON 1.2 con overlays temporizados, prioridad, texto, jugador y referencias de evento. No está conectado a un mezclador de video o socio de render. |
-| Personalización | Fan/Analista, español/inglés, equipo favorito, jugador favorito y métrica seleccionada. |
-| Narrativas y resumen | Narrativa de secuencia y recap de los eventos recibidos; no es un resumen de 90 minutos. Narración real de Foundry verificada en Azure con referencias de evidencia validadas. El recap con IA está disponible y queda pendiente mostrarlo en la demo. |
-| Explicabilidad táctica | Señales sobre salida ante presión, pase difícil, umbral de velocidad, presión observada y remate/atajada. Las posiciones, umbrales y puntuaciones son ilustrativos. |
-| Innovación de datos | Tres secuencias tácticas reproducibles y formato JSON documentado con esquema 1.2. |
-| Multiidioma | Interfaz y narración local en español e inglés; el idioma se envía al modelo para la respuesta. |
-| Auto-eventing desde video | No implementado. La convocatoria lo presenta como una función a considerar. |
-| Azure y tecnologías Microsoft | Azure Static Web Apps aloja la web y Azure Functions sirve `/api/narrate`; Microsoft Foundry con `gpt-5-mini` está configurado en el servidor y respondió en la prueba desplegada. La clave no se entrega al navegador. |
-| Verificación técnica | Pruebas de API aprobadas en GitHub Actions antes del despliegue. La web pública en Azure completó una secuencia sintética y mostró la lectura coordinada de dos roles y evidencia verificada. |
-| Presentación | Repositorio público actualizado. Pitch bilingüe documentado en `PROJECT_PITCH.md`. Video público y página de entrega siguen pendientes. |
+| Synthetic match data | Three repeatable fictional football sequences and structured JSON events. |
+| Event ingestion | A timed synthetic feed and JSON import that replays events in sequence. |
+| Match interpretation | Pass distance and completion, illustrative difficulty, estimated ball and shot speed, player sprint thresholds, pressure, control, and rhythm signals. |
+| Player context | Fictional player names, shirt numbers, positions, and teams linked to match events. |
+| Explainable narratives | Tactical analysis and audience narration coordinated through Microsoft Foundry, with cited event IDs checked by the API. |
+| Personalization | Fan and Analyst modes, English and Spanish, plus favorite team, player, and metric preferences. |
+| Broadcast presentation | Animated match reconstruction, session recaps, and timestamped overlay cues exportable as JSON. |
+| Microsoft and Azure | Azure Static Web Apps, Azure Functions, Microsoft Foundry (`gpt-5-mini`), and GitHub Actions. |
 
-## Lo que falta para afirmar cumplimiento final
+## Demo and submission materials
 
-La versión actual está desplegada en Azure; se verificó una respuesta real de Foundry desde la interfaz y la coordinación de los dos roles con referencias de evidencia válidas. La aplicación no recibe una transmisión externa ni analiza video. El video de demostración ya está editado en una versión de 1:59; falta publicarlo en una plataforma admitida y añadir su URL pública a la página de entrega del hackathon.
+- **Live application:** https://delightful-forest-0a04ede10.2.azurestaticapps.net/
+- **Public source repository:** https://github.com/Ain-BC00/read-the-game
+- **Project pitch:** [PROJECT_PITCH.md](PROJECT_PITCH.md)
+- **Architecture and workflow diagrams:** [Architecture](docs/architecture.svg) · [Narrative workflow](docs/match-flow.svg)
+- **Demonstration video:** Edited to 1:59; add the public YouTube, Vimeo, Facebook Video, or Youku link after publishing.
 
-La petición de auto-eventing de video está formulada en la descripción como una función sugerida (“features you should consider incorporating”), no como uno de los cinco pasos centrales requeridos. Si se quisiera añadir, haría falta un video sintético autorizado y un modelo/pipeline de visión; no se debe simular que ya existe esa capacidad.
+## Presentation notes
 
-## Próximos pasos técnicos de la entrega
+The demo uses fictional teams, players, and football events. Its live-style experience is a timed synthetic feed. Match stories, recaps, and broadcast cues are based on the events received by the application. Overlay cues are exportable as JSON for integration with a renderer.
 
-1. Publicar el video de demostración ya editado (1:59, sin material protegido no autorizado) y copiar su URL pública.
-2. Pegar el pitch y los enlaces públicos al repositorio y al video en la página de envío.
-3. Antes de grabar, revisar la interfaz en móvil y mostrar el recap y la narración verificada.
+## Final submission checklist
+
+1. Publish the edited demo video and copy its public URL.
+2. Add the public video URL to the hackathon project page.
+3. Add the public repository and project pitch to the same page.
+4. Show the synthetic event flow, Fan and Analyst views, evidence-linked narration, session recap, and overlay export in the demo.
