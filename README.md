@@ -4,6 +4,8 @@ Read the Game is a bilingual match intelligence workspace for fictional football
 
 **Live web app:** [Open READ THE GAME on Azure](https://delightful-forest-0a04ede10.2.azurestaticapps.net/)
 
+**Demo video:** [Watch READ THE GAME on YouTube](https://youtu.be/bTZP2mEAM3E)
+
 ## Contents
 
 1. [Architecture and workflow](#how-it-is-built)
@@ -59,7 +61,7 @@ The event sequences and most match calculations run in the browser. The backend 
 
 The app uses only fictional, football-realistic events. It does not ingest an external match feed, analyze video, or identify real players from broadcast footage. Its “live” mode is a timed synthetic event stream and its recap covers the received session, not a real or full 90-minute match. Broadcast mode exports cue data; it is not connected to a live video or production renderer. Speed values and tactical difficulty are illustrative calculations from the supplied synthetic positions, not official tracking data. The coordinated workflow makes two model calls to the same Foundry deployment per generated narration or recap; automatic narration is limited to one request per key moment in each sequence, with a separate request only when a user explicitly generates a session recap. Confirm Foundry availability at `/api/narrate` and verify a real response in the deployed environment. No Premier League match data or imagery is included.
 
-The hackathon description says video auto-eventing is a feature to consider; it is not stated as a must-have. A real Foundry narration has been verified in the deployed app. The remaining submission items are a public demo video shorter than two minutes and the final hackathon project-page entry. The bilingual pitch naming the technologies actually used is in [PROJECT_PITCH.md](PROJECT_PITCH.md).
+The hackathon description says video auto-eventing is a feature to consider; it is not stated as a must-have. A real Foundry narration has been verified in the deployed app. The public demo video is available on YouTube; the remaining submission step is to add the project details, repository, and video URL to the hackathon project page. The bilingual pitch naming the technologies actually used is in [PROJECT_PITCH.md](PROJECT_PITCH.md).
 
 ## Run it locally
 
@@ -81,5 +83,5 @@ Never put the key in browser code, GitHub files, screenshots, or chat. The GET e
 - Include the verified live narration in the demo; the session recap feature is available and should be shown with its evidence references.
 - Test the website at desktop and mobile widths and test JSON import/export in a browser.
 - Review the bilingual pitch in [PROJECT_PITCH.md](PROJECT_PITCH.md) and use the appropriate version on the hackathon project page.
-- Publish the completed demonstration video (under two minutes) and add its public URL, without unlicensed music or third-party marks.
-- Add the public GitHub repository and public video URL to the hackathon project page.
+- The public demonstration video is published on YouTube: [Watch the demo](https://youtu.be/bTZP2mEAM3E).
+- Add the public GitHub repository and the YouTube video URL to the hackathon project page.
